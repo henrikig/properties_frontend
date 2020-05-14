@@ -20,16 +20,12 @@ export const Chart = ({ data, currentDate, currentLocation }) => {
         }
     }
 
-    if(currentDate){
-        console.log("BAR", Object.keys(data[currentDate]).slice(0,13).map(place => data[currentDate][place][3]));
-    }
-
     const lineChart = (
         data ? (
             <Line data={{
                 labels: dates,
                 datasets: [{
-                    data: Object.keys(data).map((date) => data[date]["Gjennomsnittspris"]),
+                    data: Object.keys(data).map((date) => data[date]["Gjennomsnittspris"]).slice(-30),
                     label: 'Pris',
                     borderColor: '#1e88e5',
                     fill: true,
@@ -43,7 +39,7 @@ export const Chart = ({ data, currentDate, currentLocation }) => {
                     backgroundColor: "rgba(142,36,170, 0.3)"  
                   },
                   {
-                    data: Object.keys(data).map(date => data[date]["Ny i dag"][3]),
+                    data: Object.keys(data).map(date => data[date]["Ny i dag"][3]).slice(-30),
                     label: 'Nye siste døgnet',
                     borderColor: '#00897b',
                     fill: true,
@@ -86,7 +82,7 @@ export const Chart = ({ data, currentDate, currentLocation }) => {
             <Line data={{
                 labels: dates,
                 datasets: [{
-                    data: Object.keys(data).map(date => (data[date][currentLocation][3] || data[date][currentLocation])),
+                    data: Object.keys(data).map(date => (data[date][currentLocation][3] || data[date][currentLocation])).slice(-30),
                     label: `Prisutvikling ${currentLocation}`,
                     borderColor: '#1e88e5',
                     fill: true,
