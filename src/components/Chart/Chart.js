@@ -3,7 +3,7 @@ import { Line, Bar } from 'react-chartjs-2';
 
 import styles from './Chart.module.css';
 
-export const Chart = ({ data, currentDate }) => {
+export const Chart = ({ data, currentDate, currentLocation }) => {
     const [numListings, setNumListings] = useState([]);
     let dates = []
     
@@ -51,11 +51,11 @@ export const Chart = ({ data, currentDate }) => {
                   }
                 ],
                 
-            }}>
+            }}/>
 
-            </Line>
+            
         ) : null
-    )
+    );
 
     const barChart = (
         currentDate ? (
@@ -81,9 +81,35 @@ export const Chart = ({ data, currentDate }) => {
         ) : null
     );
 
+    const locationChart = (
+        currentLocation ? (
+            <Line data={{
+                labels: dates,
+                datasets: [{
+                    data: Object.keys(data).map(date => (data[date][currentLocation][3] || data[date][currentLocation])),
+                    label: `Prisutvikling ${currentLocation}`,
+                    borderColor: '#1e88e5',
+                    fill: true,
+                    backgroundColor: "rgba(30,136,229, 0.1)"
+                  },
+                ],
+                
+            }}/>
+        ) : null
+    );
+
+    let chart;
+    if(currentLocation){
+        chart = locationChart;
+    } else if(currentDate){
+        chart = barChart;
+    } else {
+        chart = lineChart;
+    }
+
     return (
         <div className={styles.container}>
-            {currentDate ? barChart : lineChart}
+            {chart}
         </div>
     )
 }
