@@ -14,7 +14,8 @@ export const Chart = ({ data, currentDate, currentLocation }) => {
         dates = dates.slice(-30)
         
         const arrayOfData = Object.keys(data).map(dateData => data[dateData]);
-        const arrayOfNumbers = arrayOfData.map(obj => Object.keys(obj).reduce((acc, place) => acc + (obj[place][2] || 0), 0));
+        console.log(arrayOfData);
+        const arrayOfNumbers = arrayOfData.map(obj => Object.keys(obj).reduce((acc, place) => acc + (obj[place][2] || 0), 0)).slice(-30);
         if(JSON.stringify(arrayOfNumbers) !== JSON.stringify(numListings)){
             setNumListings(arrayOfNumbers);
         }
